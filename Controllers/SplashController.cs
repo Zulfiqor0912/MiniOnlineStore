@@ -7,6 +7,6 @@ public class SplashController(
 {
     public IActionResult Index()
     {
-        return View();
+        return View("Splash");
     }
 }
