@@ -1,7 +1,25 @@
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using MiniOnlineStore.Data;
+using MiniOnlineStore.Models.User;
+using MiniOnlineStore.Repository;
+using MiniOnlineStore.Repository.Interface;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<MiniOnlineStoreDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddIdentity<User, IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<MiniOnlineStoreDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 

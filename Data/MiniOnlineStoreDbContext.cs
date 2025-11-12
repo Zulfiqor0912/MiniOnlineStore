@@ -6,8 +6,17 @@ using MiniOnlineStore.Models.User;
 
 namespace MiniOnlineStore.Data;
 
-public class MiniOnlineStoreDbContext(DbContextOptions<MiniOnlineStoreDbContext> dbContextOptions) : 
-    IdentityDbContext<User, IdentityRole<Guid>, Guid>(dbContextOptions)
+public class MiniOnlineStoreDbContext : 
+    IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
+    public MiniOnlineStoreDbContext(DbContextOptions<MiniOnlineStoreDbContext> options)
+            : base(options)
+    {
+    }
     DbSet<User> Users { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+    }
 }
