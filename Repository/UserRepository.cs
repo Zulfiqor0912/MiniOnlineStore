@@ -26,7 +26,7 @@ public class UserRepository(
             if (!result.Succeeded)
             {
                 var errors = string.Join("; ", result.Errors.Select(e => e.Description));
-                logger.LogError(Message, user.Username);
+                logger.LogError(Message, user.UserName);
                 throw new Exception(errors);
             }
             logger.LogInformation("Muvaffaqqiyatli o'tdi");

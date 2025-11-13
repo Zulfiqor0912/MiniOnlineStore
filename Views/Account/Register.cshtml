@@ -1,4 +1,5 @@
-﻿
+﻿@model MiniOnlineStore.Models.User.CreateUserDto
+
 @{
     ViewData["Title"] = "Register";
 }
@@ -8,6 +9,32 @@
         <div class="card shadow-lg rounded-4">
             <div class="card-body p-4">
                 <h2 class="text-center mb-4">Create Account</h2>
+                <form asp-action="Register" asp-controller="Account" method="post">
+                    <div class="form-group mb-3">
+                        <label asp-for="FirstName" class="form-label">FirstName</label>
+                        <input asp-for="FirstName" class="form-control" placeholder="Enter your full name" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="LastName" class="form-label">LastName</label>
+                        <input asp-for="LastName" class="form-control" placeholder="Enter your full name" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Username" class="form-label">Username</label>
+                        <input asp-for="Username" class="form-control" placeholder="Usernameni belgilang" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <input asp-for="Password" class="form-control" placeholder="Kodni kiriting" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-3">Register</button>
+                    <div class="text-center mt-3">
+                        <p>Allaqachon kabinent bormi? <a asp-controller="User" asp-action="Login">Login here</a></p>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
