@@ -2,11 +2,13 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MiniOnlineStore.Data;
+using MiniOnlineStore.Extension;
 using MiniOnlineStore.Models.User;
 using MiniOnlineStore.Repository;
 using MiniOnlineStore.Repository.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.AddPresentation();
 
 builder.Services.AddDbContext<MiniOnlineStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -33,6 +35,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 

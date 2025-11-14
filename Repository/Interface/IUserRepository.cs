@@ -5,5 +5,5 @@ namespace MiniOnlineStore.Repository.Interface;
 public interface IUserRepository
 {
     Task<bool> CreateUser(CreateUserDto userDto);
-    Task LoginUser(UserLoginDto loginDto);
+    Task<string> LoginUser(UserLoginDto loginDto);
 }

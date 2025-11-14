@@ -13,6 +13,11 @@ namespace MiniOnlineStore.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        public IActionResult GetAllProduct()
+        { 
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
