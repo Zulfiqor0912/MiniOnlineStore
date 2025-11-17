@@ -3,7 +3,7 @@ using Azure.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using MiniOnlineStore.Data;
-using MiniOnlineStore.Models.User;
+using MiniOnlineStore.Models.Users;
 using MiniOnlineStore.Repository.Interface;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

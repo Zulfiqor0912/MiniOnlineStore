@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
-using MiniOnlineStore.Models.User;
+using MiniOnlineStore.Models.Products;
+using MiniOnlineStore.Models.Users;
 
 namespace MiniOnlineStore.Data;
 
@@ -15,8 +16,16 @@ public class MiniOnlineStoreDbContext :
     }
     DbSet<User> Users { get; set; }
 
+    DbSet<Product> Products { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<Product>()
+            .HasOne(p => p.User)
+            .WithMany(p => p.Products)
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

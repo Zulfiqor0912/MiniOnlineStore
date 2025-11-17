@@ -1,4 +1,4 @@
-﻿using MiniOnlineStore.Models.User;
+﻿using MiniOnlineStore.Models.Users;
 
 namespace MiniOnlineStore.Repository.Interface;
 

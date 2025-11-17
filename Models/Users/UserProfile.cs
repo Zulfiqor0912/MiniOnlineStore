@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace MiniOnlineStore.Models.User;
+namespace MiniOnlineStore.Models.Users;
 
 public class UserProfile : Profile
 {
