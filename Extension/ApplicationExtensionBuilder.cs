@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using MiniOnlineStore.Repository;
+using MiniOnlineStore.Repository.Interface;
 using System.Text;
 
 namespace MiniOnlineStore.Extension;
@@ -45,5 +47,7 @@ public static class ApplicationExtensionBuilder
             options.Cookie.HttpOnly = true;
             options.Cookie.IsEssential = true;
         });
+
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
     }
 }

@@ -1,23 +1,49 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MiniOnlineStore.Models;
+using MiniOnlineStore.Models.Products;
+using MiniOnlineStore.Repository.Interface;
+using System.Diagnostics;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace MiniOnlineStore.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(
+        IProductRepository productRepository,
+        ILogger<HomeController> logger) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
 
         [HttpGet]
         public IActionResult GetAllProduct()
         { 
             return View();
         }
+
+        public IActionResult CreateProduct()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(ProductDto dto)
+        {
+            var claims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
+            if (!ModelState.IsValid) return View(dto);
+
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                // User login qilmagan, xatolik qaytarish
+                return Unauthorized("Foydalanuvchi tizimga kirmagan");
+            }
+            var userId = Guid.Parse(userIdClaim);
+
+            await productRepository.CreateProductAsync(dto, userId);
+            return RedirectToAction("CreateProduct", "Index");
+        }
+
+
         public IActionResult Index()
         {
             return View();

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MiniOnlineStore.Models.User;
+using MiniOnlineStore.Models.Users;
 using MiniOnlineStore.Repository.Interface;
 using Microsoft.AspNetCore.Http;
 

@@ -1,0 +1,50 @@
+﻿@model MiniOnlineStore.Models.Products.ProductDto
+
+@{
+    ViewData["Title"] = "Create Product Page";
+}
+<h1>Create Product Page</h1>
+<p>Create Product Page</p>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="card shadow-lg rounded-4">
+            <div class="card-body p-4">
+                <h2 class="text-center mb-4">Create Product</h2>
+                <form asp-action="CreateProduct" method="post">
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="form-label">Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="Product name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Price" class="form-label">Price</label>
+                        <input asp-for="Price" class="form-control" placeholder="$0000" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Quantity" class="form-label">Quantity</label>
+                        <input asp-for="Quantity" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Description" class="form-label">Description</label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="ImageUrl" class="form-label">ImageUrl</label>
+                        <input asp-for="ImageUrl" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-3">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

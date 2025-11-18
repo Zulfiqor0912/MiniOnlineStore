@@ -17,6 +17,6 @@ public class Product
     public string ImageUrl { get; set; } // Rasm linki (istalgancha)
 
     // Foreign key (User bilan bog‘lanish)
-    public string UserId { get; set; }
+    public Guid UserId { get; set; }
     public User User { get; set; }
 }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MiniOnlineStore.Data;
 using MiniOnlineStore.Extension;
-using MiniOnlineStore.Models.User;
+using MiniOnlineStore.Models.Users;
 using MiniOnlineStore.Repository;
 using MiniOnlineStore.Repository.Interface;
 
