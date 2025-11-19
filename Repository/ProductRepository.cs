@@ -6,6 +6,7 @@ using MiniOnlineStore.Models;
 using MiniOnlineStore.Repository.Interface;
 using System.Security.Claims;
 using MiniOnlineStore.Models.Users;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MiniOnlineStore.Repository;
 
@@ -48,15 +49,34 @@ public class ProductRepository(
         }
     }
 
-    public async Task<IEnumerable<ProductDto>> GetAllProductAsync()
+    public async Task<IEnumerable<Product>> GetAllProductAsync()
     {
         var products = await dbContext.Products.ToListAsync();
-        var productsD = mapper.Map<List<ProductDto>>(products);
-        return productsD;
+        return products;
     }
 
-    public Task<bool> UpdateProductAsync(ProductDto productDto)
+    public async Task<Product> GetProductByIdAsync(Guid productId, Guid userId)
     {
-        throw new NotImplementedException();
+        var product = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId && p.UserId == userId);
+        return product!;
+    }
+
+    public async Task<bool> UpdateProductAsync(Guid productId, ProductDto dto)
+    {
+        var oldProduct = await dbContext.Products.FindAsync(productId);
+
+        if (oldProduct is null) throw new ArgumentNullException("Bunday mahsulot topilmadi");
+
+        if (dto == null)
+            throw new ArgumentException("Maydonlarni to'ldiring");
+
+        oldProduct.Name = dto.Name;
+        oldProduct.Description = dto.Description;
+        oldProduct.Price = dto.Price;
+        oldProduct.ImageUrl = dto.ImageUrl;
+        oldProduct.Quantity = dto.Quantity;
+
+        await dbContext.SaveChangesAsync();
+        return true;
     }
 }

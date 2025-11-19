@@ -1,0 +1,49 @@
+﻿@model MiniOnlineStore.Models.Products.ProductDto
+
+@{
+    ViewData["Title"] = "Mahsulotlarni Tahrirlash";
+}
+
+<h2>Mahsulotlarni Tahrirlash</h2>
+<form asp-action="UpdateProduct" asp-controller="Home" method="post">
+    <input type="hidden" name="productId" value="@ViewData["ProductId"]" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Mahsulot nomi</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Narxi</label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Tavsif</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageUrl" class="form-label">Rasm URL</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Quantity" class="form-label">Miqdor</label>
+        <input asp-for="Quantity" type="number" class="form-control" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Saqlash</button>
+    <a asp-action="GetAllProduct" class="btn btn-secondary">Bekor qilish</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

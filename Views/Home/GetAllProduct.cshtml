@@ -1,6 +1,43 @@
-﻿
+﻿@using MiniOnlineStore.Models.Products
+@model List<Product>
+
 @{
     ViewData["Title"] = "GetAllProduct";
 }
 
-<div class=""
+<h1>Barcha mahsulotlar</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ism</th>
+            <th>Narx</th>
+            <th>Tavsif</th>
+            <th>Amallar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.Description</td>
+                <td>
+                    @if(product.ShowActions)
+                    {
+                        <a href="@Url.Action("UpdateProduct", "Home", new { productId = product.Id })"
+                           class="btn btn-warning">
+                            Edit
+                        </a>
+
+                        <form asp-action="DeleteProduct" asp-controller="Home" method="post" style="display:inline;">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

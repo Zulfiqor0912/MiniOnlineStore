@@ -47,7 +47,7 @@ public class UserRepository(
 
     }
 
-    public async Task<string> LoginUser(UserLoginDto loginDto)
+    public async Task LoginUser(UserLoginDto loginDto)
     {
         if (loginDto is null) throw new ArgumentNullException(nameof(loginDto));
 
@@ -60,37 +60,15 @@ public class UserRepository(
                 throw new ApplicationException("Email yoki parol xato");
             }
 
-            var result = await signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+            var result = await signInManager.PasswordSignInAsync(
+                loginDto.Username, 
+                loginDto.Password, 
+                true, 
+                false
+                );
+
             if (!result.Succeeded)
-            {
                 logger.LogWarning("Login xato: noto'g'ri parol {Email} ", loginDto.Username);
-                throw new ApplicationException("Email yoki parol xato");
-            }
-            logger.LogInformation("Foydalanuchi muvaffaqqiyatli login qilindi", loginDto.Username);
-            var authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.UserName ?? user.Email ?? ""),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var secret = config["JWT:Secret"];
-            if (string.IsNullOrWhiteSpace(secret))
-                throw new Exception("JWT secret topilmadi. Iltimos appsettings yoki user-secrets da sozla.");
-
-            var authSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(config["JWT:Secret"])
-            );
-
-            var token = new JwtSecurityToken(
-                issuer: config["JWT:ValidIssuer"],
-                audience: config["JWT:ValidAudience"],
-                expires: DateTime.UtcNow.AddHours(2),
-                claims: authClaims,
-                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
         catch (Exception ex)
         {

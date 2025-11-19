@@ -4,7 +4,7 @@ namespace MiniOnlineStore.Models.Products;
 
 public class Product
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Name { get; set; }   // Mahsulot nomi
 
@@ -19,4 +19,5 @@ public class Product
     // Foreign key (User bilan bog‘lanish)
     public Guid UserId { get; set; }
     public User User { get; set; }
+    public bool ShowActions { get; set; } = false;
 }

@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using MiniOnlineStore.Models.Users;
 using MiniOnlineStore.Repository.Interface;
-using Microsoft.AspNetCore.Http;
 
 namespace MiniOnlineStore.Controllers;
 
 public class AccountController(ILogger<AccountController> logger,
-    IUserRepository userRepository) : Controller
+    IUserRepository userRepository,
+    SignInManager<User> signInManager) : Controller
 {
     [HttpGet]
     public IActionResult Register()
@@ -45,15 +48,25 @@ public class AccountController(ILogger<AccountController> logger,
         {
             return View(loginDto);
         }
-        var token = await userRepository.LoginUser(loginDto);
 
-        if (token == null)
+        var result = await signInManager.PasswordSignInAsync(
+            loginDto.Username,
+            loginDto.Password,
+            isPersistent: false,
+            lockoutOnFailure: false
+            );
+        if (!result.Succeeded)
         {
-            ModelState.AddModelError("", "Username yoki Parol noto'g'ri");
+            ModelState.AddModelError("", "Username yoki parol xato");
             return View(loginDto);
         }
-        HttpContext.Session.SetString("JwtToken", token);
-
         return RedirectToAction("Index", "Home");
+    }
+
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+        await signInManager.SignOutAsync();
+        return RedirectToAction("Login", "Account");
     }
 }

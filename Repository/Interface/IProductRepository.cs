@@ -4,10 +4,11 @@ namespace MiniOnlineStore.Repository.Interface;
 
 public interface IProductRepository
 {
-    Task<IEnumerable<ProductDto>> GetAllProductAsync();
+    Task<IEnumerable<Product>> GetAllProductAsync();
 
     Task<bool> CreateProductAsync(ProductDto productDto, Guid userId);
 
-    Task<bool> UpdateProductAsync(ProductDto productDto);
+    Task<bool> UpdateProductAsync(Guid productId, ProductDto dto);
     Task<bool> DeleteProductAsync(Guid id);
+    Task<Product> GetProductByIdAsync(Guid productId, Guid userId);
 }

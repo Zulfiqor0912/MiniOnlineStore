@@ -12,8 +12,8 @@ using MiniOnlineStore.Data;
 namespace MiniOnlineStore.Migrations
 {
     [DbContext(typeof(MiniOnlineStoreDbContext))]
-    [Migration("20251117160649_InitTwo")]
-    partial class InitTwo
+    [Migration("20251119142437_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,11 +158,9 @@ namespace MiniOnlineStore.Migrations
 
             modelBuilder.Entity("MiniOnlineStore.Models.Products.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -181,6 +179,9 @@ namespace MiniOnlineStore.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<bool>("ShowActions")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
