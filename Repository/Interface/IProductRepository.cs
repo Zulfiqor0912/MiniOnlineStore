@@ -11,4 +11,5 @@ public interface IProductRepository
     Task<bool> UpdateProductAsync(Guid productId, ProductDto dto);
     Task<bool> DeleteProductAsync(Guid id);
     Task<Product> GetProductByIdAsync(Guid productId, Guid userId);
+    Task<IEnumerable<Product>> SearchProduct(string search);
 }

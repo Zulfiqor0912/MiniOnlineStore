@@ -7,6 +7,7 @@ using MiniOnlineStore.Repository.Interface;
 using System.Security.Claims;
 using MiniOnlineStore.Models.Users;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace MiniOnlineStore.Repository;
 
@@ -59,6 +60,18 @@ public class ProductRepository(
     {
         var product = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId && p.UserId == userId);
         return product!;
+    }
+
+    public async Task<IEnumerable<Product>> SearchProduct(string search)
+    {
+        var products = dbContext.Products.AsQueryable();
+        if (!string.IsNullOrEmpty(search))
+        {
+            products = products.Where(p => p.Name.Contains(search));
+        }
+
+        
+        return await products.ToListAsync();
     }
 
     public async Task<bool> UpdateProductAsync(Guid productId, ProductDto dto)

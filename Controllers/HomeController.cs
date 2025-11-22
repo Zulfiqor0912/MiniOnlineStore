@@ -6,6 +6,7 @@ using MiniOnlineStore.Repository.Interface;
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace MiniOnlineStore.Controllers;
 
@@ -106,12 +107,16 @@ public class HomeController(
         return RedirectToAction("GetAllProduct");
     }
 
-
-    //[HttpPost]
-    //public async Task<IActionResult> UpdateProduct(ProductDto dto)
-    //{
-
-    //}
+    [HttpGet]
+    public async Task<IActionResult> SearchProduct(string search)
+    {
+        var products = await productRepository.SearchProduct(search);
+        if (!products.Any())
+        {
+            ViewBag.Message = "Mahsulot topilmadi";
+        }
+        return View(products);
+    }
 
     [AllowAnonymous]
     public IActionResult Index()
